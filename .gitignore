@@ -1,0 +1,58 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+
+# Editors / IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.settings/
+
+# Claude Code runtime / auto-generated state (if any appears in skill dirs)
+.claude/
+.bkit/
+*.log
+
+# Python (in case any helper scripts are added)
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+.env
+
+# Node (if any tooling is added)
+node_modules/
+npm-debug.log*
+
+# Skill execution artifacts
+# Skills produce intermediate work folders during execution.
+# These should never be committed to the skill source repo.
+proposal_work_*/
+proposal_work/
+
+# Test outputs / temporary
+tmp/
+temp/
+*.tmp
+*.bak
+
+# OS generated files
+*.orig
+*.rej
