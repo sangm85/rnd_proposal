@@ -4,7 +4,7 @@
 > 한국 정부 R&D 과제계획서·연구개발계획서·RFP 기반 제안서·공모사업 사업계획서를 단계별 산출물 누적 방식으로 작성하는 [Claude Code](https://docs.claude.com/claude-code) Skill.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Skill version](https://img.shields.io/badge/skill-v1.0.0-blue.svg)](#버전)
+[![Skill version](https://img.shields.io/badge/skill-v1.0.1-blue.svg)](#버전)
 
 ---
 
@@ -140,7 +140,7 @@ git clone https://github.com/sangm85/rnd_proposal.git ~/.claude/skills/rnd_propo
 ### 옵션 B. 특정 버전 클론
 
 ```bash
-git clone --branch v1.0.0 https://github.com/sangm85/rnd_proposal.git ~/.claude/skills/rnd_proposal
+git clone --branch v1.0.1 https://github.com/sangm85/rnd_proposal.git ~/.claude/skills/rnd_proposal
 ```
 
 ### 옵션 C. 개발자용 symlink
@@ -205,7 +205,7 @@ ln -s ~/dev/rnd-proposal-skill ~/.claude/skills/rnd_proposal
 
 ## 버전
 
-현재 v1.0.0. 변경 이력은 [CHANGELOG.md](CHANGELOG.md) 참조.
+현재 v1.0.1. 변경 이력은 [CHANGELOG.md](CHANGELOG.md) 참조.
 
 ## 라이선스
 
