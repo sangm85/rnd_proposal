@@ -60,6 +60,19 @@ description: |
 
 파일 기반 작업이면 현재 작업공간에 `proposal_work_<short-topic>/`를 만들고 중간 산출물을 남긴다. 원본 파일은 수정하지 않고 `00_inputs/`에 복사본을 둔다.
 
+## Companion Skills
+
+이 스킬과 함께 쓰면 좋은 스킬:
+
+- **[`codex_image_renderer`](https://github.com/sangm85/codex_image_renderer)** — Visual Asset
+  Planner 단계에서 만든 `visual_assets.yaml`을 받아 도식·인포그래픽 PNG를 일괄 렌더한다.
+  사용자가 도식 1장씩 직접 그리거나 codex CLI 프롬프트를 작성할 필요 없이 N장을 한 번에
+  뽑아준다. 11단계 Visual Asset Planner의 자연스러운 후속 도구다.
+  - 사전 필수: `npm install -g @openai/codex && codex login` (codex CLI ≥ 0.130).
+    Homebrew Cask(`brew install --cask codex`)도 가능하나 보통 npm보다 한두 버전 늦다.
+  - 설치: `git clone https://github.com/sangm85/codex_image_renderer.git ~/.claude/skills/codex_image_renderer`
+- **`hwpxskill`** — RFP나 양식이 `.hwpx` (한글) 포맷일 때 직접 분석·편집이 필요하면 함께 쓴다.
+
 ## When Starting
 
 먼저 사용자가 준 RFP, 공고문, 제출 양식, 참고자료, 기존 제안서, 평가항목, 참여기관 정보를 확인한다. 자료가 부족하더라도 모든 값을 임의 확정하지 않는다. 질문은 일반적인 질문 목록을 던지는 방식이 아니라, `RFP Analyzer`와 `Form Analyzer` 결과를 근거로 만들어야 한다.
@@ -381,6 +394,42 @@ Visual Asset Spec을 별도 파일로만 만들지 않는다. Section Writer 또
 ```
 
 렌더링 후보는 Mermaid, ReactFlow, SVG Generator, Figma, draw.io, PPT Diagram Generator, MCP image generation tool(`mcp__openai-image__generate_image`)이다. 상세 포맷은 `references/diagram_spec.md`를 읽는다.
+
+### codex_image_renderer로 일괄 렌더링
+
+`render_candidate: imagegen` 또는 `suggested_format: generated_image`로 표시된 자산은
+[`codex_image_renderer`](https://github.com/sangm85/codex_image_renderer) 스킬로 일괄
+렌더링한다. 위 `visual_asset_spec` 목록을 `visual_assets.yaml`로 떨어뜨린 뒤, 작업
+폴더에서 다음 두 명령을 차례로 실행한다.
+
+> ⚠️ **사전 필수**: `codex_image_renderer`는 OpenAI Codex CLI의 imagegen을 백엔드로
+> 사용한다. 스킬을 쓰기 전에 반드시 `npm install -g @openai/codex && codex login`으로
+> 인증을 끝내고 `codex --version`이 0.130 이상인지 확인한다. 미설치 상태에서는 렌더가
+> 100% 실패하므로, Visual Asset Planner 단계에 들어가기 전에 점검해두는 게 안전하다.
+> (Homebrew Cask도 가능: `brew install --cask codex`)
+>
+> 스킬 자체 설치(아직 없다면):
+> ```bash
+> git clone https://github.com/sangm85/codex_image_renderer.git \
+>   ~/.claude/skills/codex_image_renderer
+> pip install pyyaml
+> ```
+
+```bash
+# 1) JSONL 빌드 (proposal.md는 본문 발췌 매칭용, 옵션)
+python3 ~/.claude/skills/codex_image_renderer/scripts/build_prompts.py \
+    --visual-assets 05_visual_assets/visual_assets.yaml \
+    --proposal 05_visual_assets/proposal_excerpt.md \
+    --out 05_visual_assets/tmp/prompts.jsonl
+
+# 2) 일괄 렌더링 (이미 존재하는 PNG는 skip, 실패 1회 retry)
+python3 ~/.claude/skills/codex_image_renderer/scripts/render_batch.py \
+    --jsonl 05_visual_assets/tmp/prompts.jsonl \
+    --out-dir 05_visual_assets/out
+```
+
+자산 단위 디버깅은 `--only VA-001`, 강제 재생성은 `--force`. 비용·스키마 규약은
+`~/.claude/skills/codex_image_renderer/SKILL.md`와 references 문서를 따른다.
 
 ## Export Agent
 

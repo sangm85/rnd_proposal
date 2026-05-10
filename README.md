@@ -196,6 +196,14 @@ ln -s ~/dev/rnd-proposal-skill ~/.claude/skills/rnd_proposal
 
 ## 함께 쓰면 좋은 스킬
 
+- **[`codex_image_renderer`](https://github.com/sangm85/codex_image_renderer)** —
+  11단계 **Visual Asset Planner**가 만든 `visual_assets.yaml`을 받아 도식·인포그래픽
+  PNG를 일괄 렌더링한다. 사용자가 도식을 1장씩 직접 그리거나 codex CLI 프롬프트를
+  작성할 필요 없이 N장을 한 번에 뽑아준다. **이 스킬과 가장 자연스럽게 이어지는
+  후속 도구**다.
+  - 사전 필수: `npm install -g @openai/codex && codex login` (codex CLI ≥ 0.130).
+    Homebrew Cask(`brew install --cask codex`)도 가능하나 보통 npm보다 한두 버전 늦다.
+  - 스킬 설치: `git clone https://github.com/sangm85/codex_image_renderer.git ~/.claude/skills/codex_image_renderer`
 - `hwpxskill` — HWPX(한글) 파일 직접 분석·편집이 필요할 때
 
 ## 호환성
